@@ -1,14 +1,13 @@
 public class Solution {
     public int lengthOfLongestSubstring(String s) {
+        int left = 0;
         int maxLength = 0;
-        String currentWindow = "";
-        for (int i = 0; i < s.length(); i++) {
-            char c = s.charAt(i);
-            if (currentWindow.contains(String.valueOf(c))) {
-                currentWindow = ""; 
+        for (int right = 0; right < s.length(); right++) {
+            int duplicateIndex = s.indexOf(s.charAt(right), left);
+            if (duplicateIndex != -1 && duplicateIndex < right) {
+                left = duplicateIndex + 1;
             }
-            currentWindow += c;
-            maxLength = Math.max(maxLength, currentWindow.length());
+            maxLength = Math.max(maxLength, right - left + 1);
         }
         return maxLength;
     }
